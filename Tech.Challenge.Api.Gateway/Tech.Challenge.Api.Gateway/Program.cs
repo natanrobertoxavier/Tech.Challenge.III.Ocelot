@@ -13,7 +13,7 @@ builder.Services.AddAuthentication("Bearer")
         {
             ValidateIssuer = false,
             ValidateAudience = false,
-            IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String("YTJVPzlCM3Q1KVkoPGM1PlgqNit8MjR4O3Jba1ZR"))
+            IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(builder.Configuration["GlobalConfiguration:SecretKey"]))
         };
     });
 
