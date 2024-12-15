@@ -4,14 +4,16 @@ using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
-        options.Authority = "https://localhost:7183/";
-        options.TokenValidationParameters = new TokenValidationParameters()
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateAudience = false
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String("YTJVPzlCM3Q1KVkoPGM1PlgqNit8MjR4O3Jba1ZR"))
         };
     });
 
