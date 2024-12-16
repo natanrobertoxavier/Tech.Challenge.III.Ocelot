@@ -23,7 +23,12 @@ builder.Services.AddOcelot();
 var app = builder.Build();
 
 app.UseMetricServer();
-app.UseHttpMetrics();
+app.UseHttpMetrics(options =>
+{
+    options.AddCustomLabel("http_route", context => context.Request.Path.Value ?? "unknown");
+    options.AddCustomLabel("http_method", context => context.Request.Method);
+    options.AddCustomLabel("http_status_code", context => context.Response.StatusCode.ToString());
+});
 
 await app.UseOcelot();
 
