@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  userloginapi:
+    image: ocelot:latest
+    container_name: ocelot_container
+    ports:
+      - "5555:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "HML"
+    networks:
+      - techchallengenetwork
+
+networks:
+  techchallengenetwork:
+    external: true
