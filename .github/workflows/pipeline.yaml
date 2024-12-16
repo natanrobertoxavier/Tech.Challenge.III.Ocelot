@@ -11,14 +11,14 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    # - name: Backup existing code and logs
-    #   run: |
-    #     TIMESTAMP=$(date +"%Y-%m-%d-%H:%M:%S")
-    #     CONTAINER_NAME="userlogin_container"
-    #     LOG_FILE="/home/natan/backups/user-login-logs-$TIMESTAMP.log"
-    #     docker logs $CONTAINER_NAME > $LOG_FILE        
-    #     zip -r /home/natan/backups/user-login-backup-$TIMESTAMP.zip ${{ github.workspace }} $LOG_FILE
-    #     rm $LOG_FILE
+    - name: Backup existing code and logs
+      run: |
+        TIMESTAMP=$(date +"%Y-%m-%d-%H:%M:%S")
+        CONTAINER_NAME="ocelot_container"
+        LOG_FILE="/home/natan/backups/ocelot-logs-$TIMESTAMP.log"
+        docker logs $CONTAINER_NAME > $LOG_FILE        
+        zip -r /home/natan/backups/ocelot-backup-$TIMESTAMP.zip ${{ github.workspace }} $LOG_FILE
+        rm $LOG_FILE
 
     - name: Checkout code
       uses: actions/checkout@v2
@@ -48,8 +48,8 @@ jobs:
       if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/')
       run: dotnet publish Tech.Challenge.Api.Gateway/Tech.Challenge.Api.Gateway.sln --no-build --configuration Release --output ${{ github.workspace }}/publish
       
-    # - name: Replace appsettings tech.challenge
-    #   run: cp -f /home/natan/appsettings/appsettings.json ${{ github.workspace }}/User.Login/User.Login.Api/appsettings.json
+    - name: Replace appsettings tech.challenge
+      run: cp -f /home/natan/appsettings/ocelot/appsettings.json ${{ github.workspace }}/Tech.Challenge.Api.Gateway/Tech.Challenge.Api.Gateway/appsettings.json
     
     - name: Stop and remove existing containers
       run: |
