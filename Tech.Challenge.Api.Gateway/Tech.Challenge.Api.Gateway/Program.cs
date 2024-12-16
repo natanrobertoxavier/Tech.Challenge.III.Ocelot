@@ -1,6 +1,7 @@
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,9 @@ builder.Services.AddOcelot();
 
 var app = builder.Build();
 
-app.UseOcelot();
+app.UseMetricServer();
+app.UseHttpMetrics();
+
+await app.UseOcelot();
 
 app.Run();
