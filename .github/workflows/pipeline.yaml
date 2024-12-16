@@ -37,13 +37,7 @@ jobs:
       
     - name: Build the project
       run: dotnet build Tech.Challenge.Api.Gateway/Tech.Challenge.Api.Gateway.sln --no-restore --configuration Release
-
-    # - name: Run unit tests
-    #   run: dotnet test User.Login/User.Login.Tests/User.Login.Tests.csproj --no-build --configuration Release --logger "trx;LogFileName=unit-test-user-Login-results.trx"
-
-    # - name: Run integration tests
-    #   run: dotnet test User.Login/User.Login.Integration.Tests/User.Login.Integration.Tests.csproj --no-build --configuration Release --logger "trx;LogFileName=integration-test-user-Login-results.trx"
-
+     
     - name: Publish the project
       if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/')
       run: dotnet publish Tech.Challenge.Api.Gateway/Tech.Challenge.Api.Gateway.sln --no-build --configuration Release --output ${{ github.workspace }}/publish
